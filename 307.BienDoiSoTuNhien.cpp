@@ -27,7 +27,6 @@ int solve(int n){
             }
         }
     }
-    return -1;
 }
 
 int main(){
