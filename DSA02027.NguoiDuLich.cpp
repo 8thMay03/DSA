@@ -11,9 +11,7 @@ void Try(int i){
             xet[j]=1;
             cnt++;
             sum+=a[i][j];
-            if(cnt==n-1) {
-                res=min(res,sum+a[j][1]);
-            }
+            if(cnt==n-1) res=min(res,sum+a[j][1]);
             else if(sum<res) Try(j);
             sum-=a[i][j];
             cnt--;
