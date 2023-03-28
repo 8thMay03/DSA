@@ -16,7 +16,7 @@ void Try(int i){
             ll len=v.size();
             cnt=min(cnt,len);
         }
-        else if(sum<k) Try(j+1);
+        else if(sum<k && v.size()<cnt) Try(j+1);
         v.pop_back();
         sum-=a[j];
     }

@@ -1,0 +1,26 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+    int t;
+    cin >> t;
+    while(t--){
+        string s;
+        cin >> s;
+        stack<string> st;
+        for(int i=s.size()-1;i>=0;i--){
+            if(isdigit(s[i])) st.push(string(1,s[i]));
+            else{
+                string a,b;
+                a=st.top(); st.pop();
+                b=st.top(); st.pop();
+                if(s[i]=='+') st.push(to_string(stoi(a)+stoi(b)));
+                else if(s[i]=='-') st.push(to_string(stoi(a)-stoi(b)));
+                else if(s[i]=='*') st.push(to_string(stoi(a)*stoi(b)));
+                else if(s[i]=='/') st.push(to_string(stoi(a)/stoi(b)));
+            }
+        }
+        cout <<st.top() << endl;
+    }
+}
