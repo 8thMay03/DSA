@@ -32,3 +32,28 @@ int main(){
         cout << endl;
     }
 }
+
+/*#include<bits/stdc++.h>
+#define ll long long
+
+using namespace std;
+
+ll fb[93]={0,1,1};
+
+char solve(ll n,ll k){
+	if(n==1 && k==1) return '0';
+	if(n==2 && k==1) return '1';
+	if(k>fb[n-2]) return solve(n-1,k-fb[n-2]);
+	return solve(n-2,k);
+}
+
+int main(){
+	for(int i=3;i<=93;i++) fb[i]=fb[i-1]+fb[i-2];
+	int t;
+	cin >> t;
+	while(t--){
+		ll n,k;
+		cin >> n >>k;
+		cout << solve(n,k) << endl;
+	}
+}*/
