@@ -24,12 +24,9 @@ int main(){
                 }
             }
         }
-        while(s.find('(')!=string::npos){
-            s.erase(s.begin()+s.find('('));
+        for(int i=0;i<s.size();i++){
+            if(s[i]!='(' && s[i]!=')') cout << s[i];
         }
-        while(s.find(')')!=string::npos){
-            s.erase(s.begin()+s.find(')'));
-        }
-        cout << s << endl;
+        cout << endl;
     }
 }

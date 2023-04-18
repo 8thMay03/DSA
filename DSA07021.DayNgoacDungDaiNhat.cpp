@@ -16,9 +16,7 @@ int main(){
             if(s[i]=='(') st.push(i);
             else{
                 st.pop();
-                if(!st.empty()){
-                    res=max(res,i-st.top());
-                }
+                if(!st.empty()) res=max(res,i-st.top());
                 else st.push(i);
             }
         }
