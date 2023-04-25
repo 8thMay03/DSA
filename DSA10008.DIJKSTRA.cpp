@@ -23,7 +23,6 @@ void solve(int s){
         int u=t.second;
         int d=t.first;
         q.pop();
-        if(d>dist[u]) continue;
         for(auto i:adj[u]){
             int v=i.first;
             int w=i.second;
