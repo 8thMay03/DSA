@@ -1,30 +1,33 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 #define ll long long
+#define vi vector<int>
+#define vll vector<long long>
+#define fi first
+#define se second
+#define pb push_back
+#define pii pair<int,int>
 
 using namespace std;
-
-vector<int> v[100005];
-int deg[100005];
 
 int main(){
     int t;
     cin >> t;
-    while(t--){   
-        for(int i=0;i<100005;i++) v[i].clear();
-        memset(deg,0,sizeof(deg));
-        int n,m,ok=1;
-        cin >> n >> m;  
+    while(t--){
+        int n,m,x,y,ok=1;
+        cin >> n >> m;
+        set<int> ke[n+1];
         while(m--){
-            int x,y;
             cin >> x >> y;
-            v[x].push_back(y);
-            v[y].push_back(x);
+            ke[x].insert(y);
+            ke[y].insert(x);
         }
-        for(int i=1;i<=n;i++){
-            for(int j:v[i]){
-                if(v[i].size()!=v[j].size()){
-                    ok=0;
-                    break;
+        for(int i=1;i<=n;i++){                                      //Kiểm tra bạn của i là j, j có bạn k nào là bạn của i không
+            for(int j:ke[i]){
+                for(int k:ke[j]){
+                    if(!ke[i].count(k) && i!=k){
+                        ok=0;
+                        break;
+                    }
                 }
             }
         }

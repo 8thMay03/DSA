@@ -1,12 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 int n,col[1005],res=0;
+
 bool check(int i){
     for(int j=0;j<i;j++){
         if(col[j]==col[i]||abs(col[i]-col[j])==i-j) return false;
     }
     return true;
 }
+
 void Try(int i){
     if(i==n){
         res++;

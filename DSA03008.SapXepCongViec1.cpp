@@ -1,33 +1,35 @@
 #include<bits/stdc++.h>
-using namespace std;
 #define ll long long
+#define vi vector<int>
+#define fi first
+#define se second
+#define pb push_back
+#define pii pair<int,int>
 
-int s[1005],f[1005],n,cnt;
-pair<int,int> p;
-bool cmp(pair<int,int> a,pair<int,int> b){
-    return a.second < b.second;
+using namespace std;
+
+pii a[1005];
+
+bool cmp(pii a,pii b){
+    return a.se < b.se;
 }
 
 int main(){
     int t;
     cin >> t;
     while(t--){
-        cnt=1;
-        vector<pair<int,int>> v;
+        int n,ans=1;
         cin >> n;
-        for(int i=0;i<n;i++) cin >> s[i];
-        for(int i=0;i<n;i++){
-            cin >> f[i];
-            v.push_back(make_pair(s[i],f[i]));
-        }
-        sort(v.begin(),v.end(),cmp);
-        int tmp=v[0].second;
+        for(int i=0;i<n;i++) cin >> a[i].fi;
+        for(int i=0;i<n;i++) cin >> a[i].se;
+        sort(a,a+n,cmp);
+        int tmp=a[0].se;
         for(int i=1;i<n;i++){
-            if(v[i].first>=tmp){
-                cnt++;
-                tmp=v[i].second;
+            if(a[i].fi>=tmp){
+                ans++;
+                tmp=a[i].se;
             }
         }
-        cout << cnt << endl;
+        cout << ans << endl;
     }
 }
