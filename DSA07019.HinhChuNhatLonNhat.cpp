@@ -1,38 +1,75 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+
 #define ll long long
+#define vi vector<int>
+#define vll vector<long long>
+#define vc vector<char>
+#define vs vector<string>
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+#define vvi vector<vi>
+#define vvl vector<vll>
+#define fi first
+#define se second
+#define pb push_back
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
+#define mii map<int, int>
+#define mll map<ll, ll>
+#define faster() ios::sync_with_stdio(false); cin.tie(0);
+#define pi 3.14159265358979323846
 
 using namespace std;
 
-int main(){
-	int t;
-	cin >> t;
-	while(t--){
-		ll n,res=0;
-		cin >> n;
-		stack<ll> st;
-		vector<ll> a(n),r(n),l(n);
-		for(int i=0;i<n;i++) cin >> a[i];
-		for(int i=0;i<n;i++){	// Tìm cột nhỏ hơn đầu tiên bên phải
-			while(!st.empty() && a[i]<a[st.top()]){
-				r[st.top()]=i; st.pop();
-			}	
-			st.push(i);
-		}
-		while(st.size()){		//Những cột mà không có cột nhỏ hơn bên phải thì coi cột cần tìm là n
-			r[st.top()]=n;
-			st.pop();
-		}
-		for(int i=n-1;i>=0;i--){	//Tìm cột nhỏ hơn đầu tiên bên trái
-			while(!st.empty() && a[i]<a[st.top()]){
-				l[st.top()]=i; st.pop();
-			}	
-			st.push(i);
-		}
-		while(st.size()){		//Những cột mà không có cột nhỏ hơn bên phải thì coi cột cần tìm là -1
-			l[st.top()]=-1;
-			st.pop();
-		}
-		for(int i=0;i<n;i++) res=max(res,(r[i]-l[i]-1)*a[i]);	//Diện tích sẽ tính tử bên phải của cột bên trái và bên trái của cột bên phải 1 đơn vị nhân chiều cao cột đang xét
-		cout << res << endl;
-	}
+template <typename T> istream& operator >> (istream& in, vector<T>& vec) {for (T& element : vec) in >> element; return in;}
+template <typename T> ostream& operator << (ostream& out, vector<T>& vec) {for (T& element : vec) out << element << " "; return out;}
+template <typename T> ostream& operator << (ostream& out, set<T>& st) {for (const T& element : st) out << element << " "; return out;}
+
+void solve() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    cin >> a;
+    stack<int> st;
+    vector<int> v1(n), v2(n);
+
+    for (int i = 0; i < n; i++) {
+        while (st.size() and a[st.top()] > a[i]) {
+            v1[st.top()] = i;
+            st.pop();
+        }
+        st.push(i);
+    }
+    while (st.size()) {
+        v1[st.top()] = n;
+        st.pop();
+    }
+
+    for (int i = n - 1; i >= 0; i--) {
+        while (st.size() and a[st.top()] > a[i]) {
+            v2[st.top()] = i;
+            st.pop();
+        }
+        st.push(i);
+    }
+    while (st.size()) {
+        v2[st.top()] = -1;
+        st.pop();
+    }
+
+    ll ans = 0;
+    for (int i = 0; i < n; i++) {
+        ans = max(ans, (ll)a[i] * (v1[i] - v2[i] - 1));
+    }
+
+    cout << ans << endl;
+}
+
+int main() {
+    faster();
+    int t = 1;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
 }
