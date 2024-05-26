@@ -1,34 +1,62 @@
-#include<bits/stdc++.h>
-#define ll long long
+#include <bits/stdc++.h>
+
+#define int long long
+#define vi vector<int>
+#define vll vector<long long>
+#define vc vector<char>
+#define vs vector<string>
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+#define vvi vector<vi>
+#define vvl vector<vll>
+#define fi first
+#define se second
+#define pb push_back
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
+#define mii map<int, int>
+#define mll map<ll, ll>
+#define faster() ios::sync_with_stdio(false); cin.tie(0);
+#define pi 3.14159265358979323846
 
 using namespace std;
 
-int n,x,res,cnt;
-pair<int,int> a[1005];
+template <typename T> istream& operator >> (istream& in, vector<T>& vec) {for (T& element : vec) in >> element; return in;}
+template <typename T> ostream& operator << (ostream& out, vector<T>& vec) {for (T& element : vec) out << element << " "; return out;}
+template <typename T> ostream& operator << (ostream& out, set<T>& st) {for (const T& element : st) out << element << " "; return out;}
 
-bool cmp(pair<int,int> a,pair<int,int> b){
-    return a.second>b.second;
+void solve() {
+	int n;
+	cin >> n;
+	vector<pair<int, int>> tasks(n);
+	for (int i = 0; i < n; i++) {
+		int x;
+		cin >> x >> tasks[i].fi >> tasks[i].se;
+	}
+	sort(all(tasks));
+	priority_queue<int, vector<int>, greater<int>> pq;
+	int ans = 0;
+	for (auto task : tasks) {
+		int deadline = task.fi;
+		int profit = task.se;
+		if (pq.size() < deadline) {
+			pq.push(profit);
+			ans += profit;
+		} else if (pq.top() < profit) {
+			ans -= pq.top();
+			pq.pop();
+			pq.push(profit);
+			ans += profit;
+		}
+	}
+	cout << pq.size() << " " << ans << endl;
 }
 
-int main(){
-    int t;
-    cin >> t;
-    while(t--){
-        res=0,cnt=0;
-        map<int,int> mp;
-        cin >> n;
-        for(int i=0;i<n;i++) cin >> x >> a[i].first >> a[i].second;
-        sort(a,a+n,cmp); // sắp xếp công việc giảm dần theo lợi nhuận
-        for(int i=0;i<n;i++){   // xét từng công việc
-            for(int j=a[i].first;j>0;j--){  //chọn thời điểm làm công việc
-                if(!mp[j]){
-                    res+=a[i].second;
-                    cnt++;
-                    mp[j]=1;
-                    break;
-                }    
-            }
-        }
-        cout << cnt << " " << res << endl;
-    }
+signed main() {
+	faster();
+	int t = 1;
+	cin >> t;
+	while (t--) {
+		solve();
+	}
 }
