@@ -1,74 +1,76 @@
-#include<bits/stdc++.h>
-#define ll long long
+/*
+    Author: kamine
+    Created: 2025-07-18 09:37:18
+*/
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int a,b;
-set<int> snt;
-vector<int> ke[10005];
-
-bool checksnt(int n){
-    if(n<=1) return false;
-    for(int i=2;i<=sqrt(n);i++){
-        if(n%i==0) return false;
+bool is_prime(int n) {
+    if (n < 2) {
+        return false;
+    }
+    for (int i = 2; i <= sqrt(n); i++) {
+        if (n % i == 0) {
+            return false;
+        }
     }
     return true;
 }
 
-void sang(){
-    for(int i=1000;i<=9999;i++){
-        if(checksnt(i)) snt.insert(i);
-    }
-}
+unordered_set<string> primes;
+unordered_map<string, int> visited;
 
-bool check(int a,int b){
-    int cnt=0;
-    string x=to_string(a);
-    string y=to_string(b);
-    for(int i=0;i<x.size();i++){
-        if(x[i]!=y[i]) cnt++;
-    }
-    return cnt==1;
-}
-
-void kt(){
-    for(int i:snt){
-        for(int j:snt){
-            if(i==j) continue;
-            if(check(i,j)){
-                ke[i].push_back(j);
-                ke[j].push_back(i);
-            }
+void sieve() {
+    for (int i = 1000; i <= 9999; i++) {
+        if (is_prime(i)) {
+            primes.insert(to_string(i));
         }
     }
 }
 
-int solve(int a,int b){
-    if(a==b) return 0;
-    queue<pair<int,int>> q;
-    map<int,int> mp;
-    mp[a]=1;
-    q.push({a,0});
-    while(!q.empty()){
-        auto tmp=q.front();
+void solve() {
+    visited.clear();
+    string S, T;
+    cin >> S >> T;
+    if (S == T) {
+        cout << 0 << endl;
+        return;
+    }
+    queue<pair<string, int>> q;
+    q.push({S, 0});
+    visited[S] = 1;
+    while (!q.empty()) {
+        auto [s, step] = q.front();
         q.pop();
-        for(int i:ke[tmp.first]){
-            if(!mp[i]){
-                if(i==b) return tmp.second+1;
-                mp[i]=1;
-                q.push({i,tmp.second+1});
+        for (int i = 0; i < 4; i++) {
+            string tmp = s;
+            for (char c = '0'; c <= '9'; c++) {
+                if (c == tmp[i]) {
+                    continue;
+                }
+                tmp[i] = c;
+                if (primes.count(tmp) && !visited[tmp]) {
+                    if (tmp == T) {
+                        cout << step + 1 << endl;
+                        return;
+                    }
+                    q.push({tmp, step + 1});
+                    visited[tmp] = 1;
+                }
             }
         }
     }
-    return -1;
+    cout << -1 << endl;
 }
 
-int main(){
-    sang(); kt();
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    sieve();
     int t;
     cin >> t;
-    while(t--){
-        cin >> a >> b;
-        cout << solve(a,b) << endl;
+    while (t--) {
+        solve();
     }
 }
